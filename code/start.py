@@ -1,9 +1,8 @@
+
 from datetime import datetime
-from email import policy
-from time import time
 
 
-def Gym():
+def Gym1():
     import gym
     import matplotlib.pyplot as plt
     env = gym.make("CartPole-v1")
@@ -22,8 +21,8 @@ def Gym():
     plt.show()
 
 def Gym2():
+    from email import policy
     import gym
-    from gym.envs import box2d
     env = gym.make("LunarLander-v2", render_mode="human")
     observation, info = env.reset(seed=42)
     for _ in range(1000):
@@ -32,13 +31,18 @@ def Gym2():
 
         if terminated or truncated:
             observation, info = env.reset()
-    env.close() 
+    env.close()
 
-
-
-
-
+def Gym3():
+    import gym
+    import gnwrapper
+    env = gnwrapper.Monitor(gym.make('CartPole-v1'))         
+    obs = env.reset()
+    for _ in range(100):
+        o, r, d, i = env.step(env.action_space.sample())
+        if d:
+            env.reset()
+    env.display()
 if __name__ == "__main__":
     print("we start the test", datetime.now().strftime("%D%M%Y%H:%M:%S"))
-    Gym()
-    Gym2()
+    Gym3()
