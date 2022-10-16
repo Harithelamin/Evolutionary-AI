@@ -1,7 +1,7 @@
 swing ==3.0.12
 box2d-py==2.3.5
 Gym ==0.25.0
-gym[atari]  
+gym[atari]  ==2.3.5
 pocketsphinx
 pipwin
 lz4>=3.1.0
