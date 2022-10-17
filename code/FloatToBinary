@@ -1,0 +1,2 @@
+#Float To Binary
+def floatTobin(number):
