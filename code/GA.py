@@ -25,7 +25,7 @@ def run_episode(env, policy, episode_len=100):
     return total_reward
 
 
-def evaluate_policy(env, policy, n_episodes=100):
+def evaluate(env, policy, n_episodes=100):
     total_rewards = 0.0
     for _ in range(n_episodes):
         total_rewards += run_episode(env, policy)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     start = time.time()
     policy_pop = [gen_random_policy() for _ in range(n_policy)]
     for idx in range(n_steps):
-        scores = [evaluate_policy(env, p) for p in policy_pop]
+        scores = [evaluate(env, p) for p in policy_pop]
         print('Generation %d : max score = %0.2f' %(idx+1, max(scores)))
         policy_ranks = list(reversed(np.argsort(scores)))
         elite_set = [policy_pop[x] for x in policy_ranks[:5]]
@@ -72,14 +72,13 @@ if __name__ == '__main__':
         mutated_list = [mutation(p) for p in child_set]
         policy_pop = elite_set
         policy_pop += mutated_list
-    score = [evaluate_policy(env, p) for p in policy_pop]
+    score = [evaluate(env, p) for p in policy_pop]
     best_policy = policy_pop[np.argmax(score)]
 
     end = time.time()
     print('Best policy score = %0.2f. Time taken = %4.4f'
             %(np.max(score), (end-start)))    
 
-    ## Evaluation
     env = gym.make("CartPole-v1", render_mode="human")
     for _ in range(200):
         run_episode(env, best_policy)
